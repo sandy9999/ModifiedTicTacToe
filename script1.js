@@ -3,7 +3,15 @@ var me = true;
 function youstart()
 {
 	board = [
-	[-1,-1,-1],[-1,-1,-1],[-1,-1,-1] ];
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1],
+	[-1,-1,-1,-1,-1,-1,-1,-1,-1] ];
 	me = true;
 	update()
 }
@@ -11,7 +19,15 @@ function youstart()
 function AIstart()
 {
 	board = [
-        [-1,-1,-1],[-1,-1,-1],[-1,-1,-1] ];
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1] ];
 	me = false;
 	update();
 	AImove();
@@ -22,22 +38,42 @@ function winner(board)
 	var allfill = true;
 	for(var i=0; i<2; i++)
 	{
-		var trdiag = true;
-		var tldiag = true;
-		for(var j=0; j<3; j++)
+		var trdiag = false;
+		var tldiag = false;
+		var cttrdiag=0;
+		var cttldiag=0;
+		for(var j=0; j<9; j++)
 		{
-			if(board[j][j]!=i)
-				tldiag = false;
-			if(board[2-j][j]!=i)
-				trdiag = false;
-			var row = true;
-			var col = true;
-			for(var k=0; k<3; k++)
+			if(board[j][j]==i)
+				cttldiag++;
+			else
+				cttldiag=0;
+			if(board[8-j][j]==i)
+				cttrdiag++;
+			else
+				cttrdiag=0;
+			if(cttrdiag==5)
+				trdiag = true;
+			if(cttldiag==5)
+				tldiag=true;
+			var row = false;
+			var col = false;
+			var rowct=0;
+			var colct=0;
+			for(var k=0; k<9; k++)
 			{
-				if(board[j][k]!=i)
-					row = false;
-				if(board[k][j]!=i)
-					col = false;
+				if(board[j][k]==i)
+					rowct++;
+				else
+					rowct=0;
+				if(board[k][j]==i)
+					colct++;
+				else
+					colct=0;
+				if(rowct==5)
+					row = true;
+				if(colct==5)
+					col = true;
 				if(board[j][k]==-1)
 					allfill = false;
 			}
@@ -56,9 +92,9 @@ function winner(board)
 
 function updateUI()
 {
-	for(var i=0; i<3; i++)
+	for(var i=0; i<9; i++)
 	{
-		for(var j=0; j<3; j++)
+		for(var j=0; j<9; j++)
 		{
 			if(board[i][j]==1)
 				document.getElementById('_'+i.toString()+j.toString()).innerHTML = 'X';
@@ -111,9 +147,9 @@ function minimax(board,who)
 	if(who)
 	{
 		var best = -1000;
-		for(var i=0; i<3; i++)
+		for(var i=0; i<9; i++)
 		{
-			for(var j=0; j<3; j++)
+			for(var j=0; j<9; j++)
 			{
 				if(board[i][j]==-1)
 				{
@@ -128,9 +164,9 @@ function minimax(board,who)
 	else
 	{
 		var best = 1000;
-		for(var i=0; i<3; i++)
+		for(var i=0; i<9; i++)
 		{
-			for(var j=0; j<3; j++)
+			for(var j=0; j<9; j++)
 			{
 				if(board[i][j]==-1)
 				{
@@ -150,9 +186,9 @@ function AImove()
 	var bestie = -1000;
 	var bestrow = -1;
 	var bestcol = -1;
-	for(var i=0; i<3; i++)
+	for(var i=0; i<9; i++)
 	{
-		for(var j=0; j<3; j++)
+		for(var j=0; j<9; j++)
 		{
 			if(board[i][j]==-1)
 			{
