@@ -1,6 +1,6 @@
 var me = true;
 
-function startgame()
+function youstart()
 {
 	board = [
 	[-1,-1,-1],[-1,-1,-1],[-1,-1,-1] ];
@@ -8,6 +8,14 @@ function startgame()
 	update()
 }
 
+function AIstart()
+{
+	board = [
+        [-1,-1,-1],[-1,-1,-1],[-1,-1,-1] ];
+	me = false;
+	update();
+	AImove();
+}
 
 function winner(board)
 {
